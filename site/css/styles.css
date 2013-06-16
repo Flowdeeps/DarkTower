@@ -1,0 +1,12 @@
+* {
+  color: white;
+  font-family: helvetica;
+  }
+body {
+  background: black;
+  }
+section > div {
+  display: none;
+  position: absolute;
+  }
+  
