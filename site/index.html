@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+<link rel="stylesheet" type="text/css" href="css/normalize.css" />
 <link rel="stylesheet" type="text/css" href="css/styles.css" />
 <script src="js/jquery.2.0.2.js"></script>
 <script src="js/buzz.js"></script>
@@ -9,7 +10,7 @@
   <title>Dark Tower</title>
 </head>
 <body>
-  <h1>Dork Tawer</h1>
+  <h1>Dark Tower</h1>
   <section id="game">
     <!-- intro -->
     <div id="intro">
@@ -17,57 +18,58 @@
     </div>
     <!-- room 1 -->
     <div id="room1">
-      <p>You wake up in a room.</p>
-      <p>It’s dark. Your head hurts. The taste of blood is in your mouth. Your lips are cracked. Something is poking into your back - you are crumpled on a metal bedframe that is pushing its springs into your body. You become aware of something on your face, something wet.</p>
-      <p>It’s water, leaking from somewhere above you. You can hear a storm outside, rain falling on the roof; the sky feels close from where you are. As you feel your vision fight for focus you are alarmed - you can see nothing. You wave your hand in front of your face. Nothing.</p>
-      <p>A moment of panic - have you gone blind? You turn your head to the side and detect a shift between shades of black on the wall. You realise you’re not blind - you’re just in complete darkness. You experience a moment of clarity and your confusion gives way to a feeling that seems primal, old - fear. Why are you here? How did you get here? You shiver as you realise you’re wearing pyjamas that have been dripped on for some time.</p>
-      <p>Adrenaline floods your limbs. Panic grips your heart. You are overcome with a desire to get out of here. But how?</p>
-      <p>The fear bubbles up inside you, and you want to yell out, shout into the darkness - maybe someone will hear you and help.</p>
-      <div id="room1puzz1">
+      <div id="room1choice1">
         <p>What do you want to shout?</p>
         <ul>
           <li><a href="#" class="opt1">HELP!</a></li>
           <li><a href="#" class="opt2">HELLO!</a></li>
           <li><a href="#" class="opt3">IS THERE ANYBODY THERE?</a></li>
         </ul>
+        <p class="hidden">There is no response</p>
       </div>
-      <p>Nothing happens</p>
-      <p>You want to move, you want to get out of here. You swing your legs over the side of the bed, and your bare feet slap against a cold and wet stone floor. You decide a course of action is necessary.</p>
-      <div id="room1choice1">
+      <div id="room1choice2">
         <ul>
           <li><a href="#" class="opt1">Stand up</a></li>
           <li><a href="#" class="opt2">Get on the floor</a></li>
         </ul>
       </div>
-      <p>You stand up, stretching out your arms to test how big this space is. Your left hand hits a stone wall, and you feel along it with both hands, hoping for a door. The wall is round. You don’t find any corners, and you don’t find any door - but what you do find is a light switch. Light! You flick it - nothing. You flick it again - nothing. You flick it again and again and again - nothing. There doesn’t appear to be any power. You wonder when it last worked.</p>
-      <p>You carefully drop to your knees and run your hands across the cold wet stone floor, exploring the space and searching for anything useful. Your  hands run into a soggy rug on the floor, and you run your hands over it. There’s a lump under the rug, and exploring underneath reveals a trap door handle. Pushing the sodden rug aside you feel the outline of the square trap door, grasp the handle, and pull it open. You carefully feel your way onto the ladder that descends into the blackness below.</p>
     </div>
 
     <!-- room 2 -->
     <div id="room2">
-      <p>The wooden ladder feels much warmer than the stone floor as you lower yourself into the room below. Your foot lands on a cold floor covered by what feels like a thin, threadbare piece of cloth. The air is stale - the smell of must and age, of mould and neglect.</p>
-      <p>You clutch the side of the ladder in the dark room like a lifeline. Still, no windows, but it feels drier. The sound of rain from outside is a little quieter in here but you can hear trees rustling in the wind. You must be in a forest. You reach out into the inky blackness with your hand and feel a wall near the ladder.</p>
       <div id="room2choice1">
+
         <p>You need to search this room. Do you follow the wall to the left or the right?</p>
+
         <ul>
           <li><a href="#">Search to the left</a></li>
           <li><a href="#">Search to the right</a></li>
         </ul>
+
       </div>
-      <p>You notice your breath coming in quick gasps as your shaky hands move over the wall, looking for a door or a way out. Your hand brushes against a lump of cold marble just below chest level. You run your hands along it, it juts out about six inches from the wall and is long and straight. Is this a mantlepiece? Bending down you run your hands along the ornate carving of the fireplace and carefully and gingerly feel for the fire grate. To your relief It’s full of cold ash and spent coal. You imagine a passage to the outside world through the chimney. Do you want to reach in and see if it’s wide enough?</p>
-      <p>You decide that if there’s a chimney you’re more likely to get stuck in it, so you follow the wall to the other side of the room.</p>
-      <p>Not wasting any time, your heartbeat ringing in your ears and drowning out the sound of the storm outside, you run your hands over the wall. You hope for a door, a way out. Your hands run over some rough wood and you realise you have found one. Fumbling for the knob you also realise it’s locked, and a shove with your shoulder doesn’t budge it. You want to scream and kick the door in frustration; your only hope of escape is locked. You are suddenly aware of the chattering of rats and realise you are not the only thing alive here, and suck your scream back into your throat.</p>
-      <p>You continue along the wall and fall over something heavy - an armchair, maybe? You knock something over that sounds like it might have been a lamp. Is this a sitting room? You realise you are getting further away from the door, even if it’s locked it’s your only means of escape.</p>
+
       <div id="room2choice2">
+
+        <ul>
+          <li><a href="#">Reach into the flue</a></li>
+          <li><a href="#">That's probably not a good idea.</a></li>
+        </ul>
+
+      </div>
+
+      <div id="room2choice3">
+
         <p>Do you continue feeling along the wall, or do you feel around the door again? </p>
+
         <ul>
           <li><a href="#">Continue feeling along the wall</a></li>
           <li><a href="#">Feel round for the door again</a></li>
         </ul>
+
       </div>
-      <p>Your hands knock against something wooden jutting out from the walls. You feel shelves, containing what you think are books. nowing that the door is locked you start frantically pulling books off the shelf, hoping one of them is a switch that will open the locked door, you’ve seen this happen in movies. Books - damp, heavy lumps of leather and what was once paper - thud heavily at your feet. You feel the empty shelves, sure you must have missed one. The door does not click. It’s still locked.</p>
-      <p>You calm yourself and carefully feel around the door itself. Beside it are three thin ropes. How did you miss these when you were looking before? Pulling on the first rope rope triggers a mechanism in the wall and a distant bell chimes, perhaps in a servant kitchen somewhere else in the building. Maybe the door will open if you can play the notes in the correct order…</p>
-      <div id="room2puzz1">
+
+      <div id="room2choice4">
+
         <ul>
           <li><a href="#">First, second, third</a></li>
           <li><a href="#">First, third, second</a></li>
@@ -76,52 +78,55 @@
           <li><a href="#">Third, first, second</a></li>
           <li><a href="#">Third, second, first</a></li>
         </ul>
+
       </div>
-      <p>The door slowly swings open and you descend into the darkness…</p>
+
     </div>
+
+    <!-- room 3 -->
     <div id="room3">
-      <p>You emerge from the stairs into what feels like another room. The air is still, and the overwhelming sickly sweetness of rotting food hangs there. You hear a humming noise that you can’t quite place at first, and then you realise - flies. This room sounds bigger, pulsing with all this life in the dark.</p>
-      <p>You reach your hands out in front of you and slowly, carefully shuffle forward. You bump against what must be the edge of a table - something glass falls to the floor and breaks. </p>
-      <p>You freeze, wondering if anyone heard you. Through your blood rushing in your ears, all you can hear is the sound of the storm and the buzzing of flies. You are suddenly so tired, your head is so sore.</p>
       <div id="room3choice1">
+
         <ul>
           <li><a href="#">Find a chair</a></li>
           <li><a href="#">No thanks, I'll stand</a></li>
         </ul>
+
       </div>
-      <p>You find a chair next to the table, and sit down. The smell of rot gets stronger, overpowering, the buzz of flies overwhelming, but it feels so good to rest. Flies are swarming around your head in the dark, trying to crawl into your ears and nose. You clench your lips to stop from accidentally swallowing any. You want to sleep. You wonder if there’s a spot on the table in front of you that you can put your head.</p>
-      <p>You feel for a plate in front of you but there’s nothing there. You continue exploring further until your hand disturbs something moist and gelatinous. A new chorus of buzzing flies roar to life; you must have disturbed something rotten, the source of them all. You try not to think about it and wonder if you can just have a little nap.</p>
+
       <div id="room3choice2">
         <ul>
           <li><a href="#">Take a nap</a></li>
           <li><a href="#">Sleep here; Are you kidding?</a></li>
         </ul>
       </div>
-      <p>You slip into a long, dark sleep. <span>DEATH!</span></p>
-      <p>The fear sets in again - you need to leave. Fou stand up and stretch your arms out in front of you, moving around to  find a wall. Soon you do, and begin feeling along it. You are getting confident with your exploring abilities when your thumb brushes against something that cuts it. You put your thumb in your mouth to stop the pain and your get the taste of blood. Your other hand feels slowly, carefully for what hurt you, and you find two swords hanging on the wall.</p>
+
       <div id="room3choice3">
+
         <ul>
           <li><a href="#">Take a sword</a></li>
           <li><a href="#">No thanks, I can't be trusted with sharp things</li>
         </ul>
+
       </div>
-      <p>Continuing along the wall you find another door. You dread what you’ll have to do to get this one open. You try to handle - to your amazement, it swings open before you. Your sense of relief makes you forget the storm, the flies, the cold, the cut on your thumb. You step onto the stairs… but the first one is missing.</p>
+
     </div>
+
+    <!-- room 4 -->
     <div id="room4">
-      <p>You are impaled on the sword as you fall down the stairs. The last thing you see as you lie at the bottom of the stairs, your life leaking out of you, is a silver line of moonlight at the floor. You were so close.</p>
-      <p>You roll to the bottom of the stairs, and land at the bottom with a thud. Your head is pounding. Your eyes begin to stream. Your breath comes in quick gasps. Your heart thrums in your ears.</p>
-      <p>You’re momentarily grateful that you didn’t take that sword - you could have really hurt yourself.</p>
-      <p>You put a hand on the wall, try to calm yourself, catch your breath. You’re still in the dark, and you realise the floor you’re sitting on is wet. You can hear the rain outside. Through your swimming vision you can see a sliver of grey on the floor, which must be moonlight from outside coming under a door. Relief floods your body, a grin of gratefulness and giddiness on your face. As you relax and your heartbeat slows again, you detect another sound - the gentle growling and breathing of something very large and very close.</p>
-      <p>Cold fear flashes up your spine, and your body seems stuck to the cold, wet floor. You hold your breath. You make no sound. You consider your next move - you know you have to take action.</p>
-      <p>You look at the silver line of moonlight under the door.</p>
+
       <div id="room4choice1">
+
         <ul>
           <li><a href="#">Sneak out</a></li>
           <li><a href="#">Bust out</a></li>
         </ul>
+
       </div>
-      <p>You quietly rise to your feet and focus on the line of light under the door. You hear the growling beast and hope it’s sleeping. You begin to move slowly towards the door when</p>
-      <p>Sitting on the floor you look at the grey line of light. You know you have to make one, fast action. Ignoring the sound of the beast you visualise what you will do - get to the door, open it, start running. You hope the door isn’t locked. In one movement you lunge towards the door, find the handle. The beast lunges at you, misses you. You tear open the door and start running. You’re free - the rain soaks your clothes, your feet are torn apart on the forest floor, branches hit you in the face, but you run and run and run and run and run.</p>
+    </div>
+
+    <div id="gameOver">
+      <p>Game over</p>
     </div>
   </section>
 </body>  

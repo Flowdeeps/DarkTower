@@ -5,8 +5,44 @@
 body {
   background: black;
   }
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  }
+h1 {
+  text-align: center;
+  color: #333;
+  text-transform: uppercase;
+  }
+/* helper classes */
+.hidden {
+  display: none;
+  }
+#start {
+  display: block;
+  width: 150px;
+  line-height: 40px;
+  margin: 0 auto;
+  text-align: center;
+  border-radius: 5px;
+  background: yellow;
+  color: black;
+  text-decoration: none;
+  }
+section {
+  margin: 20px;
+  position: relative;
+  }
 section > div {
+  top: 80px;
+  bottom: 0;
+  left: 0;
+  right: 0;
   display: none;
   position: absolute;
   }
-  
+  section > div > div,
+  section > div > p {
+    display: none;
+    }
