@@ -1,5 +1,5 @@
 ##README
-This game was the winning entry to the Microsoft sponsored Berlin Mini Games Jam at Game Academy.
+This game was the winning entry to the Microsoft sponsored Berlin Mini Games Jam at Game Academy in June 2013.
 
 It was written and recorded in about 10 hours.
 
