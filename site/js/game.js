@@ -39,8 +39,12 @@ window.onload = function(){
   var room2rain       = new buzz.sound("audio/room2_rain_loop.wav",{
     loop: true
   });
-  var room2rats       = new buzz.sound("audio/room2_rats.wav");
-  var room2wind       = new buzz.sound("audio/room2_wind.wav");
+  var room2rats       = new buzz.sound("audio/room2_rats.wav",{
+    loop: true
+  });
+  var room2wind       = new buzz.sound("audio/room2_wind.wav",{
+    loop: true
+  });
   var room2ambient    = new buzz.group(room2rain);
   // story
   var room2story1     = new buzz.sound("audio/room2_1.wav");
@@ -105,28 +109,29 @@ window.onload = function(){
     });
     var linksLen = arrLinks.length;
     var diceOfDeath = randomizr(linksLen);
-    console.log(arrLinks[diceOfDeath]);
+    // console.log(arrLinks[diceOfDeath]);
     if (inRoom1 === true) {
       var showChoice = setTimeout(function(){
         room1choice1.fadeIn(1000);
       }, 85000);
 
       room1choice1.find('a').bind('click', function(){
-        if ($(this).text() === arrLinks[diceOfDeath]){
+        if ($(this).text() === arrLinks[0]){
           lose.play();
+          room1.fadeOut();
           drone.fadeOut(2000);
           room1ambient.fadeOut(2000);
           setTimeout(function(){
             intro.fadeIn();
           }, 1000);
         } else {
-          room1choice1.find('hidden').fadeIn(1000);
+          room1choice1.find('.hidden').fadeIn(1000);
           setTimeout(function(){
             room1story2.load();
             room1story2.play();
             showRoom1Choice2();
             room1choice1.fadeOut(1000);
-          }, 1000);
+          }, 4000);
         }
         return false;
       });
@@ -151,6 +156,9 @@ window.onload = function(){
         room2.fadeIn(1000);
         room2story1.load();
         room2story1.play();
+        setTimeout(function(){
+          room2wind.fadeIn(1000);
+        }, 26000);
         setTimeout(function(){
           showRoom2Choice1();
         }, 39000);
@@ -181,48 +189,50 @@ window.onload = function(){
     
   function showRoom2Choice1(){
     room2choice1.fadeIn(1000);
-    i = 0;
+    var j = 0;
     room2choice1.find('a').each(function(){
       $(this).bind('click', function(){
-        if (i === 0){
+        if (j === 0){
           room2story2.load();
           room2story2.play();
           room2Chimney();
         } else {
           room2story3.load();
           room2story3.play();
+          setTimeout(function(){
+            room2rats.fadeTo(50);
+          }, 26500);
         }
         room2choice1.fadeOut(1000);
         return false;
       });
-      i = i + 1;
+      j = j + 1;
     });
 
+    // search to the left
     function room2Chimney(){
       setTimeout(function(){
-        room2choice2();
+      var room2choice2 = $('#room2choice2');
+      function showRoom2Choice2(){
+        room2choice2.fadeIn(1000);
+        i = 0;
+        room2choice2.find('a').each(function(){
+          $(this).bind('click', function(){
+            if (i === 0){
+              lose.play();
+              drone.fadeOut(2000);
+              room2ambient.fadeOut(2000);          
+            } else {
+              showRoom2Choice3();
+            }
+            room2choice2.fadeOut(1000);
+            return false;
+          });
+          i = i + 1;
+        });
+      }
       }, 37000);
     }
-  }
-
-  var room2choice2 = $('#room2choice2');
-  function showRoom2Choice2(){
-    room2choice2.fadeIn(1000);
-    i = 0;
-    room2choice2.find('a').each(function(){
-      $(this).bind('click', function(){
-        if (i === 0){
-          lose.play();
-          drone.fadeOut(2000);
-          room2ambient.fadeOut(2000);          
-        } else {
-          showRoom2Choice3();
-        }
-        room2choice1.fadeOut(1000);
-        return false;
-      });
-      i = i + 1;
-    });
   }
 
   var room2choice3 = $('#room2choice3');
@@ -238,13 +248,34 @@ window.onload = function(){
         } else {
           showRoom2Choice3();
         }
-        room2choice1.fadeOut(1000);
+        room2choice3.fadeOut(1000);
         return false;
       });
       i = i + 1;
     });
   }
 
+  var room2choice4 = $('#room2choice4');
+  function showRoom2Choice4(){
+    arrLinks = [];
+    room2choice4.fadeIn(1000);
+    i = 0;
+    diceOfDeath = randomizr(room2choice4.find('a').length);
+    console.log(arrLinks[diceOfDeath]);
+    room2choice4.find('a').each(function(){
+      $(this).bind('click', function(){
+        if ($(this).text() === arrLinks[diceOfDeath]){
+          
+        } else {
+
+        }
+        room2choice4.fadeOut(1000);
+        return false;
+      });
+      arrLinks[i] = $(this).text();
+      i = i + 1;
+    });
+  }
 
   }
 }

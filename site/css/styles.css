@@ -1,6 +1,7 @@
 * {
   color: white;
   font-family: helvetica;
+  text-align: center;
   }
 body {
   background: black;
@@ -11,7 +12,13 @@ ul {
   padding: 0;
   }
 h1 {
+  background: url(../images/logo.png) center center no-repeat transparent;
+  text-indent: -10000em;
+  overflow: hidden;
+  width: 419px;
+  height: 300px;
   text-align: center;
+  margin: 20px auto;
   color: #333;
   text-transform: uppercase;
   }
@@ -26,7 +33,7 @@ h1 {
   margin: 0 auto;
   text-align: center;
   border-radius: 5px;
-  background: yellow;
+  background: #8c8c8c;
   color: black;
   text-decoration: none;
   }
