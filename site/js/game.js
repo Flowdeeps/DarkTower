@@ -1,91 +1,106 @@
 window.onload = function(){
 
   // objects
-  var intro = $('#intro');
-    var start = $('#start');
-  var room1 = $('#room1');
-  var room2 = $('#room2');
-  var room3 = $('#room3');
-  var room4 = $('#room4');
-
-  // room vars
-  var inRoom1 = false;
-  var inRoom2 = false;
-  var inRoom3 = false;
-  var inRoom4 = false;
+  var gameStage = $('section > div');
+  var intro     = $('#intro');
+  var start     = $('#start');
+  var gameOver  = $('#gameOver');
 
   // set vars
   var sit = false;
   var sleep = false;
   var sword = false;
 
+  // room states
+  var room1 = false;
+  var room2 = false;
+  var room3 = false;
+  var room4 = false;
+
+  // puzzle attempts
+  // is an increasing integer
+  var puzzTry = null;
+
   // audio gubbins
+  // let's try the audio in arrays
+  var arrAudio = {
+    drone      : ["audio/under_drone.wav"],
+    lose       : ["audio/lose.wav"],
+    ambience   : ["audio/room1_ambience.wav",
+                  "audio/room2_rain_loop.wav",
+                  "audio/room2_rats.wav",
+                  "audio/room2_wind.wav",
+                  "audio/room3_flies_loop.wav"],
+    puzzle     : ["audio/room2_bell1.wav",
+                  "audio/room2_bell2.wav",
+                  "audio/room2_bell3.wav"],
+    room1      : ["audio/room1_1.wav",
+                  "audio/room1_2.wav",
+                  "audio/room1_3.wav",
+                  "audio/room1_4.wav"],
+    room2      : ["audio/room2_1.wav",
+                  "audio/room2_2.wav",
+                  "audio/room2_3.wav",
+                  "audio/room2_4.wav",
+                  "audio/room2_5.wav"],
+    room3      : ["audio/room3_1.wav"]
+  };
   // tower drone
-  var drone           = new buzz.sound("audio/under_drone.wav",{
+  var drone           = new buzz.sound(arrAudio.drone[0] ,{
     loop: true
   });
+  // ambience
   // room 1
-  var room1rain       = new buzz.sound("audio/room1_ambience.wav",{
+  var room1rain       = new buzz.sound(arrAudio.ambience[0] ,{
     loop: true
   });
   var room1ambient    = new buzz.group(room1rain);
   // story
-  var room1story1     = new buzz.sound("audio/room1_1.wav");
-  var room1story2     = new buzz.sound("audio/room1_2.wav");
-  var room1story3     = new buzz.sound("audio/room1_3.wav");
-  var room1story4     = new buzz.sound("audio/room1_4.wav");
+  var room1story1     = new buzz.sound(arrAudio.room1[0]);
+  var room1story2     = new buzz.sound(arrAudio.room1[1]);
+  var room1story3     = new buzz.sound(arrAudio.room1[2]);
+  var room1story4     = new buzz.sound(arrAudio.room1[3]);
 
   // room 2
-  var room2rain       = new buzz.sound("audio/room2_rain_loop.wav",{
+  var room2rain       = new buzz.sound(arrAudio.ambience[1],{
     loop: true
   });
-  var room2rats       = new buzz.sound("audio/room2_rats.wav",{
+  var room2rats       = new buzz.sound(arrAudio.ambience[2],{
     loop: true
   });
-  var room2wind       = new buzz.sound("audio/room2_wind.wav",{
+  var room2wind       = new buzz.sound(arrAudio.ambience[3],{
     loop: true
   });
   var room2ambient    = new buzz.group(room2rain);
   // story
-  var room2story1     = new buzz.sound("audio/room2_1.wav");
-  var room2story2     = new buzz.sound("audio/room2_2.wav");
-  var room2story3     = new buzz.sound("audio/room2_3.wav");
-  var room2story4     = new buzz.sound("audio/room2_4.wav");
-  var room2story5     = new buzz.sound("audio/room2_5.wav");
+  var room2story1     = new buzz.sound(arrAudio.room2[0]);
+  var room2story2     = new buzz.sound(arrAudio.room2[1]);
+  var room2story3     = new buzz.sound(arrAudio.room2[2]);
+  var room2story4     = new buzz.sound(arrAudio.room2[3]);
+  var room2story5     = new buzz.sound(arrAudio.room2[4]);
+  // puzzle
+  var bell1           = new buzz.sound(arrAudio.puzzle[0]);
+  var bell2           = new buzz.sound(arrAudio.puzzle[1]);
+  var bell3           = new buzz.sound(arrAudio.puzzle[2]);
+  var bells           = new buzz.group(bell1, bell2, bell3);
 
   // room 3
-  var room3flies      = new buzz.sound("audio/room3_flies_loop.wav");
+  var room3flies      = new buzz.sound(arrAudio.ambience[4],{
+    loop: true
+  });
   var room3ambient    = new buzz.group(room3flies);
+  // story
+  var room3story1     = new buzz.sound(arrAudio.room3[0]);
 
   // incidentals
   // I would imagine that putting the clicks and bumps and breaks from the rest of the game in here would make sense
-  var lose            = new buzz.sound("audio/lose.wav");
+  var lose            = new buzz.sound(arrAudio.lose[0]);
 
   intro.show();
 
   // $('h1').bind('click', function(){
   //   room2wind.play();
   // });
-
-  start.bind('click', function(){
-    // do the audio
-    // load bits
-    drone.load();
-    room1story1.load();
-    // set firt state to true
-    inRoom1 =  true;
-    // fade in and out
-    drone.fadeTo(50, 4000, function(){
-      room1story1.play();
-      showRoom1Choice1();
-    });
-    room1ambient.fadeIn(4000);
-    // do the animation
-    intro.fadeOut(2000, function(){
-      room1.fadeIn(2000);
-    });
-    return false;
-  });
 
   // helper functions
   function randomizr(limit){
@@ -99,183 +114,310 @@ window.onload = function(){
   // var storyTree = [];
 
   // puzzles
+  // room 1
   var room1choice1 = $('#room1choice1');
-  function showRoom1Choice1(){
-    var i = 0;
-    var arrLinks = [];
-    room1choice1.find('a').each(function(){
-      arrLinks[i] = $(this).text();
-      i = i + 1;
-    });
-    var linksLen = arrLinks.length;
-    var diceOfDeath = randomizr(linksLen);
-    // console.log(arrLinks[diceOfDeath]);
-    if (inRoom1 === true) {
-      var showChoice = setTimeout(function(){
-        room1choice1.fadeIn(1000);
-      }, 85000);
-
-      room1choice1.find('a').bind('click', function(){
-        if ($(this).text() === arrLinks[0]){
-          lose.play();
-          room1.fadeOut();
-          drone.fadeOut(2000);
-          room1ambient.fadeOut(2000);
-          setTimeout(function(){
-            intro.fadeIn();
-          }, 1000);
-        } else {
-          room1choice1.find('.hidden').fadeIn(1000);
-          setTimeout(function(){
-            room1story2.load();
-            room1story2.play();
-            showRoom1Choice2();
-            room1choice1.fadeOut(1000);
-          }, 4000);
-        }
-        return false;
-      });
-    }
-  }
   var room1choice2 = $('#room1choice2');
+  // room 2
   var room2choice1 = $('#room2choice1');
-  function showRoom1Choice2(){
-    i = 0;
-    arrLinks = [];
-    room1choice2.find('a').each(function(){
-      arrLinks[i] = $(this).text();
-      i = i + 1;
-    });
+  var room2choice2 = $('#room2choice2');
+  var room2choice3 = $('#room2choice3');
+  var room2choice4 = $('#room2choice4');
+  // room 3
+  var room3choice1 = $('#room3choice1');
+  var room3choice2 = $('#room3choice2');
+  var room3choice3 = $('#room3choice3');
+  // room 4
+  var room4choice1 = $('#room4choice1');
 
-    function doThis(){
-      setTimeout(function(){
-        room1.fadeOut(1000);
-        room1ambient.fadeOut();
-        room2ambient.load();
-        room2ambient.fadeIn(1000);
-        room2.fadeIn(1000);
-        room2story1.load();
-        room2story1.play();
-        setTimeout(function(){
-          room2wind.fadeIn(1000);
-        }, 26000);
-        setTimeout(function(){
-          showRoom2Choice1();
-        }, 39000);
-      }, 33000);
+  // clickables
+
+  // gameOver scenario
+  function endGame(){
+    gameStage.fadeOut(1000);
+    gameOver.fadeIn(1000);
+    // can't die in room 1
+    if (room2 === true) {
+      console.log('is room 2');
+      room2ambient.fadeOut(1000);
     }
+    if (room3 === true ) {
+      console.log('is room 3');
+      room3ambient.fadeOut(1000);
+    }
+    if (room4 === true) {
+      console.log('is room 4');
+      room4ambient.fadeOut(1000);
+    }
+    lose.load();
+    lose.play();
+  }
 
-    var showPuzzle = setTimeout(function(){
-      room1choice2.fadeIn(1000);
-    }, 14000);
+  // start
+  start.bind('click', function(){
+    // load bits
+    drone.load();
+    room1story1.load();
+    // fade in and out
+    drone.setVolume(0);
+    drone.fadeTo(75, 4000, function(){
+      room1story1.play();
+    });
+    room1ambient.fadeIn(4000);
+    // do the animation
+    intro.fadeOut(2000, function(){
+      setTimeout(function(){
+        room1choice1.fadeIn(2000);
+      }, 87500);
+    });
+    return false;
+  });
 
-    room1choice2.find('a').bind('click', function(){
-      if ($(this).text() === arrLinks[0]){
-        room1story3.load();
-        room1story3.play();
+  // room 1
+  // onboarding
+  room1choice1.find('a').bind('click', function(){
+    $(this).parent().siblings().animate({'opacity': '0'}, 1000, function(){
+      room1choice1.find('ul').fadeOut(1000);
+    });
+    setTimeout(function(){
+      room1choice1.find('.hidden').fadeIn(1000);
+      setTimeout(function(){
+        room1choice1.find('.hidden').fadeOut(1000);
         setTimeout(function(){
-          room1story4.load();
-          room1story4.play();
-          doThis();
-        }, 34000);
-      } else {
+          room1story2.load();
+          room1story2.play();
+        }, 1000);
+      }, 3000);
+      setTimeout(function(){
+        room1choice2.fadeIn(1000);
+      }, 14000);
+    }, 3000);
+    return false;
+  });
+
+  // first actual choice
+  // stand up (then get on floor) or get on floor
+  console.log();
+  room1choice2.find('a').bind('click', function(){
+    $(this).parent().siblings().animate({'opacity': '0'}, 1000, function(){
+      room1choice2.find('ul').fadeOut(1000);
+    });
+    if (this.text === room1choice2.find('a')[0].text) {
+      room1story3.load();
+      room1story3.play();
+      setTimeout(function(){
         room1story4.load();
         room1story4.play();
-        doThis();
-      }
-      room1choice2.fadeOut();
-      return false;
-    });
-    
-  function showRoom2Choice1(){
-    room2choice1.fadeIn(1000);
-    var j = 0;
-    room2choice1.find('a').each(function(){
-      $(this).bind('click', function(){
-        if (j === 0){
-          room2story2.load();
-          room2story2.play();
-          room2Chimney();
-        } else {
-          room2story3.load();
-          room2story3.play();
-          setTimeout(function(){
-            room2rats.fadeTo(50);
-          }, 26500);
-        }
-        room2choice1.fadeOut(1000);
-        return false;
-      });
-      j = j + 1;
-    });
-
-    // search to the left
-    function room2Chimney(){
+        setTimeout(function(){
+          // move to room 2
+          room1 = false;
+          room2 = false;
+          room1ambient.fadeOut(4000);
+          room2ambient.load();
+          room2ambient.fadeIn(4000);
+          room2choice1.fadeIn(1000);
+        }, 33000);
+      }, 34500);
+    } else {
+      room1story4.load();
+      room1story4.play();
       setTimeout(function(){
-      var room2choice2 = $('#room2choice2');
-      function showRoom2Choice2(){
-        room2choice2.fadeIn(1000);
-        i = 0;
-        room2choice2.find('a').each(function(){
-          $(this).bind('click', function(){
-            if (i === 0){
-              lose.play();
-              drone.fadeOut(2000);
-              room2ambient.fadeOut(2000);          
-            } else {
-              showRoom2Choice3();
-            }
-            room2choice2.fadeOut(1000);
-            return false;
-          });
-          i = i + 1;
-        });
-      }
-      }, 37000);
+        // move to room 2
+        room1ambient.fadeOut(4000);
+        room2ambient.load();
+        room2ambient.fadeIn(4000);
+        room2choice1.fadeIn(1000);
+        room2story1.load();
+        room2story1.play();
+      }, 33000);
     }
-  }
+    return false;
+  });
 
-  var room2choice3 = $('#room2choice3');
-  function showRoom2Choice3(){
-    room2choice3.fadeIn(1000);
-    i = 0;
-    room2choice3.find('a').each(function(){
-      $(this).bind('click', function(){
-        if (i === 0){
-          lose.play();
-          drone.fadeOut(2000);
-          room2ambient.fadeOut(2000);          
-        } else {
-          showRoom2Choice3();
-        }
-        room2choice3.fadeOut(1000);
-        return false;
-      });
-      i = i + 1;
+  // search left (fireplace) or right (find door)
+  room2choice1.find('a').bind('click', function(){
+    $(this).parent().siblings().animate({'opacity': '0'}, 1000, function(){
+      room2choice1.find('ul').fadeOut(1000);
     });
-  }
+    if (this.text === room2choice1.find('a')[0].text){
+      room2story2.load();
+      room2story2.play();
+      setTimeout(function(){
+        room2choice2.fadeIn(1000);
+      }, 37000);
+    } else {
+      // find door and rats
+      room2story3.load();
+      room2story3.play();
+      setTimeout(function(){
+        room2rats.load();
+        room2rats.setVolume(0);
+        room2rats.fadeTo(10, 1000);
+      }, 27000);
+      setTimeout(function(){
+        room2choice3.fadeIn(1000);
+      }, 51000);
+    }
+  });
 
-  var room2choice4 = $('#room2choice4');
-  function showRoom2Choice4(){
-    arrLinks = [];
-    room2choice4.fadeIn(1000);
-    i = 0;
-    diceOfDeath = randomizr(room2choice4.find('a').length);
-    console.log(arrLinks[diceOfDeath]);
-    room2choice4.find('a').each(function(){
-      $(this).bind('click', function(){
-        if ($(this).text() === arrLinks[diceOfDeath]){
-          
-        } else {
+  // search fireplace (and die) or leave well alone
+  room2choice2.find('a').bind('click', function(){
+    room2choice2.find('ul').fadeOut(1000);
+    if (this.text === room2choice2.find('a')[0].text){
+      endGame();
+    } else {
+      // find door and rats
+      room2story3.load();
+      room2story3.play();
+      setTimeout(function(){
+        room2rats.load();
+        room2rats.setVolume(0);
+        room2rats.fadeTo(10, 1000);
+      }, 27000);
+      setTimeout(function(){
+        room2choice3.fadeIn(1000);
+      }, 51000);
+    }
+  });
 
-        }
-        room2choice4.fadeOut(1000);
-        return false;
-      });
-      arrLinks[i] = $(this).text();
-      i = i + 1;
+  // continue along the wall or feel around the door again
+  room2choice3.find('a').bind('click', function(){
+    $(this).parent().siblings().animate({'opacity': '0'}, 1000, function(){
+      room2choice3.find('ul').fadeOut(1000);
     });
-  }
+    if (this.text === room2choice3.find('a')[0].text){
+      // discover living room
+      room2story4.load();
+      room2story4.play();
+      setTimeout(function(){
+        // go back to the door
+        room2story5.load();
+        room2story5.play();
+        setTimeout(function(){
+          room2choice4.fadeIn(1000);
+        }, 21000);
+      }, 30000);
+    } else {
+      // go back to the door
+      room2story5.load();
+      room2story5.play();
+      setTimeout(function(){
+        room2choice4.fadeIn(1000);
+      }, 21000);
+    }
+  });
 
-  }
-}
+  var diceOfDeath = randomizr(6);
+  // console.log(room2choice4.find('a')[diceOfDeath].text);
+  bells.load();
+  room2choice4.find('a').bind('click', function(){
+    if (puzzTry < 3) {
+      if (this.text === room2choice4.find('a')[diceOfDeath].text) {
+        // success!
+        $(this).parent().siblings().animate({'opacity': '0'}, 1000, function(){
+          setTimeout(function(){
+            room2choice4.find('ul').fadeOut(1000);
+          }, 4000);
+        });
+        // move to room 3
+        room2 = false;
+        room3 = true;
+        setTimeout(function(){
+          room3story1.load();
+          room3story1.play();
+          room2ambient.fadeOut(1000);
+          room2rats.fadeOut(1000);
+          room3ambient.load();
+          setTimeout(function(){
+            room3ambient.setVolume(0);
+            room3ambient.fadeIn(1000);
+          }, 17000);
+          setTimeout(function(){
+            room3choice1.fadeIn(47000);
+          });
+        }, 5000);
+      } else {
+        $(this).animate({
+          opacity: 0
+        }, 1000);
+        puzzTry = puzzTry + 1;
+      }
+      // play bells
+      // 123
+      if (this.text === room2choice4.find('a')[0].text) {
+        bell1.play();
+        setTimeout(function(){
+          bell2.play();
+          setTimeout(function(){
+            bell3.play();
+          }, 2000);
+        }, 2000);
+      }
+      // 132
+      if (this.text === room2choice4.find('a')[1].text) {
+        bell1.play();
+        setTimeout(function(){
+          bell3.play();
+          setTimeout(function(){
+            bell2.play();
+          }, 2000);
+        }, 2000);
+      }
+      // 213
+      if (this.text === room2choice4.find('a')[2].text) {
+        bell2.play();
+        setTimeout(function(){
+          bell1.play();
+          setTimeout(function(){
+            bell3.play();
+          }, 2000);
+        }, 2000);
+      }
+      // 231
+      if (this.text === room2choice4.find('a')[3].text) {
+        bell2.play();
+        setTimeout(function(){
+          bell3.play();
+          setTimeout(function(){
+            bell1.play();
+          }, 2000);
+        }, 2000);
+      }
+      // 312
+      if (this.text === room2choice4.find('a')[4].text) {
+        bell3.play();
+        setTimeout(function(){
+          bell1.play();
+          setTimeout(function(){
+            bell2.play();
+          }, 2000);
+        }, 2000);
+      }
+      // 321
+      if (this.text === room2choice4.find('a')[5].text) {
+        bell3.play();
+        setTimeout(function(){
+          bell2.play();
+          setTimeout(function(){
+            bell1.play();
+          }, 2000);
+        }, 2000);
+      }
+    } else {
+      // get eaten
+      endGame();
+      console.log('failure');
+    }
+    return false;
+  });
+
+  // room 3
+  room3choice1.find('a').each(function(){
+    console.log(this.text);
+  });
+  room3choice1.find('a').bind('click', function(){
+    return false;
+  });
+
+  gameOver.css('line-height', $(window).height() + 'px').height($(window).height() + 'px');
+
+};
