@@ -24,26 +24,26 @@ window.onload = function(){
   // audio gubbins
   // let's try the audio in arrays
   var arrAudio = {
-    drone      : ["audio/under_drone.wav"],
-    lose       : ["audio/lose.wav"],
-    ambience   : ["audio/room1_ambience.wav",
-                  "audio/room2_rain_loop.wav",
-                  "audio/room2_rats.wav",
-                  "audio/room2_wind.wav",
-                  "audio/room3_flies_loop.wav"],
-    puzzle     : ["audio/room2_bell1.wav",
-                  "audio/room2_bell2.wav",
-                  "audio/room2_bell3.wav"],
-    room1      : ["audio/room1_1.wav",
-                  "audio/room1_2.wav",
-                  "audio/room1_3.wav",
-                  "audio/room1_4.wav"],
-    room2      : ["audio/room2_1.wav",
-                  "audio/room2_2.wav",
-                  "audio/room2_3.wav",
-                  "audio/room2_4.wav",
-                  "audio/room2_5.wav"],
-    room3      : ["audio/room3_1.wav"]
+    drone      : ["audio/under_drone.mp3"],
+    lose       : ["audio/lose.mp3"],
+    ambience   : ["audio/room1_ambience.mp3",
+                  "audio/room2_rain_loop.mp3",
+                  "audio/room2_rats.mp3",
+                  "audio/room2_wind.mp3",
+                  "audio/room3_flies_loop.mp3"],
+    puzzle     : ["audio/room2_bell1.mp3",
+                  "audio/room2_bell2.mp3",
+                  "audio/room2_bell3.mp3"],
+    room1      : ["audio/room1_1.mp3",
+                  "audio/room1_2.mp3",
+                  "audio/room1_3.mp3",
+                  "audio/room1_4.mp3"],
+    room2      : ["audio/room2_1.mp3",
+                  "audio/room2_2.mp3",
+                  "audio/room2_3.mp3",
+                  "audio/room2_4.mp3",
+                  "audio/room2_5.mp3"],
+    room3      : ["audio/room3_1.mp3"]
   };
   // tower drone
   var drone           = new buzz.sound(arrAudio.drone[0] ,{

@@ -63,8 +63,8 @@ h1 {
 a {
   display: block;
   min-width: 150px;
-  line-height: 40px;
   margin: 0 auto 20px;
+  padding: 10px;
   border-radius: 5px;
   background: #333;
   text-shadow: -1px -1px 0 #000, 1px 1px 0 #333;
@@ -87,7 +87,7 @@ section > div {
   position: absolute;
   }
 
-  #room3choice1 {
+  #room2choice2 {
     /*display: block!important;*/
     }
 
