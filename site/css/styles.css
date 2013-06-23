@@ -87,6 +87,31 @@ section > div {
   position: absolute;
   }
 
+  #start {
+    /*display: none;*/
+    }
+
+  /* chime puzzle */
+  #room2choice4 {
+    /*display: block;*/
+    }
+    #room2choice4 ul {
+      }
+      #room2choice4 ul li {
+        display: inline-block;
+        width: 30%;
+        }
+        #room2choice4 ul li a {
+          padding: 10px 0;
+          overflow: hidden;
+          direction: ltr;
+          min-width: 100%;
+          text-indent: -10000em;
+          }
+        #room2choice4 ul li:last-child {
+          margin: 0;
+          }
+
   section > div > div,
   section > div > p {
     display: none;
