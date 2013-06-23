@@ -314,7 +314,7 @@ window.onload = function(){
   var bellSequence = arrBellSequence[randomizr(arrBellSequence.length)];
   var bellAttempt = 0;
   var diceOfDeath = randomizr(arrBellSequence.length);
-  console.log(bellSequence);
+  // console.log(bellSequence);
   room2choice4.find('a').bind('click', function(){
     if (bellAttempt === bellSequence) {
       // success!
@@ -464,8 +464,6 @@ window.onload = function(){
       }
       if (bellAttempt.length === undefined) {
         console.log(0);
-      } else {
-        console.log(bellAttempt.length);
       }
     }
     return false;
