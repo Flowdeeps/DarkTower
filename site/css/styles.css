@@ -87,10 +87,6 @@ section > div {
   position: absolute;
   }
 
-  #room2choice2 {
-    /*display: block!important;*/
-    }
-
   section > div > div,
   section > div > p {
     display: none;
