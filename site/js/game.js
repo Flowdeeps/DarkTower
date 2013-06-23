@@ -33,7 +33,8 @@ window.onload = function(){
                   "audio/room3_flies_loop.mp3"],
     puzzle     : ["audio/room2_bell1.mp3",
                   "audio/room2_bell2.mp3",
-                  "audio/room2_bell3.mp3"],
+                  "audio/room2_bell3.mp3",
+                  "audio/room2_bellfail.mp3"],
     room1      : ["audio/room1_1.mp3",
                   "audio/room1_2.mp3",
                   "audio/room1_3.mp3",
@@ -82,7 +83,8 @@ window.onload = function(){
   var bell1           = new buzz.sound(arrAudio.puzzle[0]);
   var bell2           = new buzz.sound(arrAudio.puzzle[1]);
   var bell3           = new buzz.sound(arrAudio.puzzle[2]);
-  var bells           = new buzz.group(bell1, bell2, bell3);
+  var bellFail        = new buzz.sound(arrAudio.puzzle[3]);
+  var bells           = new buzz.group(bell1, bell2, bell3, bellFail);
 
   // room 3
   var room3flies      = new buzz.sound(arrAudio.ambience[4],{
@@ -306,117 +308,176 @@ window.onload = function(){
     }
   });
 
-  var diceOfDeath = randomizr(6);
   // console.log(room2choice4.find('a')[diceOfDeath].text);
   bells.load();
+  var arrBellSequence = ['123','132','213','231','312','321'];
+  var bellSequence = arrBellSequence[randomizr(arrBellSequence.length)];
+  var bellAttempt = 0;
+  var diceOfDeath = randomizr(arrBellSequence.length);
+  console.log(bellSequence);
   room2choice4.find('a').bind('click', function(){
-    if (puzzTry < 3) {
-      if (this.text === room2choice4.find('a')[diceOfDeath].text) {
-        // success!
-        $(this).parent().siblings().animate({'opacity': '0'}, 1000, function(){
-          setTimeout(function(){
-            room2choice4.find('ul').fadeOut(1000);
-          }, 4000);
+    if (bellAttempt === bellSequence) {
+      // success!
+      // $(this).parent().siblings().animate({'opacity': '0'}, 1000, function(){
+      //   setTimeout(function(){
+      //     room2choice4.find('ul').fadeOut(1000);
+      //   }, 4000);
+      // });
+      // move to room 3
+      room2 = false;
+      room3 = true;
+      setTimeout(function(){
+        room3story1.load();
+        room3story1.play();
+        room2ambient.fadeOut(1000);
+        room2rats.fadeOut(1000);
+        room3ambient.load();
+        setTimeout(function(){
+          room3ambient.setVolume(0);
+          room3ambient.fadeIn(1000);
+        }, 17000);
+        setTimeout(function(){
+          room3choice1.fadeIn(47000);
         });
-        // move to room 3
-        room2 = false;
-        room3 = true;
-        setTimeout(function(){
-          room3story1.load();
-          room3story1.play();
-          room2ambient.fadeOut(1000);
-          room2rats.fadeOut(1000);
-          room3ambient.load();
-          setTimeout(function(){
-            room3ambient.setVolume(0);
-            room3ambient.fadeIn(1000);
-          }, 17000);
-          setTimeout(function(){
-            room3choice1.fadeIn(47000);
-          });
-        }, 5000);
-      } else {
-        $(this).animate({
-          opacity: 0
-        }, 1000);
-        puzzTry = puzzTry + 1;
-      }
-      // play bells
-      // 123
-      if (this.text === room2choice4.find('a')[0].text) {
-        bell1.play();
-        setTimeout(function(){
-          bell2.play();
-          setTimeout(function(){
-            bell3.play();
-          }, 2000);
-        }, 2000);
-      }
-      // 132
-      if (this.text === room2choice4.find('a')[1].text) {
-        bell1.play();
-        setTimeout(function(){
-          bell3.play();
-          setTimeout(function(){
-            bell2.play();
-          }, 2000);
-        }, 2000);
-      }
-      // 213
-      if (this.text === room2choice4.find('a')[2].text) {
-        bell2.play();
-        setTimeout(function(){
-          bell1.play();
-          setTimeout(function(){
-            bell3.play();
-          }, 2000);
-        }, 2000);
-      }
-      // 231
-      if (this.text === room2choice4.find('a')[3].text) {
-        bell2.play();
-        setTimeout(function(){
-          bell3.play();
-          setTimeout(function(){
-            bell1.play();
-          }, 2000);
-        }, 2000);
-      }
-      // 312
-      if (this.text === room2choice4.find('a')[4].text) {
-        bell3.play();
-        setTimeout(function(){
-          bell1.play();
-          setTimeout(function(){
-            bell2.play();
-          }, 2000);
-        }, 2000);
-      }
-      // 321
-      if (this.text === room2choice4.find('a')[5].text) {
-        bell3.play();
-        setTimeout(function(){
-          bell2.play();
-          setTimeout(function(){
-            bell1.play();
-          }, 2000);
-        }, 2000);
-      }
+      }, 5000);
     } else {
-      // get eaten
-      endGame();
-      console.log('failure');
+      $(this).css({
+        backgroundColor: '#222'
+      });
+      // play single notes
+      // 1
+      var playDelay = 1000;
+      var testBells = setInterval(function(){
+        if (bellAttempt.length > 2) {
+          if (bellAttempt === bellSequence) {
+            // play bells
+            setTimeout(function(){
+            // 123
+              if (bellSequence === arrBellSequence[0]) {
+                bell1.play();
+                setTimeout(function(){
+                  bell2.play();
+                  setTimeout(function(){
+                    bell3.play();
+                  }, playDelay);
+                }, playDelay);
+              }
+              // 132
+              if (bellSequence === arrBellSequence[1]) {
+                bell1.play();
+                setTimeout(function(){
+                  bell3.play();
+                  setTimeout(function(){
+                    bell2.play();
+                  }, playDelay);
+                }, playDelay);
+              }
+              // 213
+              if (bellSequence === arrBellSequence[2]) {
+                bell2.play();
+                setTimeout(function(){
+                  bell1.play();
+                  setTimeout(function(){
+                    bell3.play();
+                  }, playDelay);
+                }, playDelay);
+              }
+              // 231
+              if (bellSequence === arrBellSequence[3]) {
+                bell2.play();
+                setTimeout(function(){
+                  bell3.play();
+                  setTimeout(function(){
+                    bell1.play();
+                  }, playDelay);
+                }, playDelay);
+              }
+              // 312
+              if (bellSequence === arrBellSequence[4]) {
+                bell3.play();
+                setTimeout(function(){
+                  bell1.play();
+                  setTimeout(function(){
+                    bell2.play();
+                  }, playDelay);
+                }, playDelay);
+              }
+              // 321
+              if (bellSequence === arrBellSequence[5]) {
+                bell3.play();
+                setTimeout(function(){
+                  bell2.play();
+                  setTimeout(function(){
+                    bell1.play();
+                  }, playDelay);
+                }, playDelay);
+              }
+            room2choice4.fadeOut(1000, function(){
+              setTimeout(function(){
+                room3story1.load();
+                room3story1.play();
+                setTimeout(function(){
+                  room3ambient.load();
+                  room3ambient.play();
+                }, 17000);
+              }, 1500);
+              setTimeout(function(){
+                room3choice1.fadeIn(1000);
+              }, 47000);
+            });
+            }, 1000);
+          } else {
+            setTimeout(function(){
+              room2choice4.find('a').attr('style', null).attr('data-played', null);
+              bellAttempt = 0;
+              bellFail.play();
+            }, 1000);
+          }
+        }
+        clearInterval(testBells);
+      }, 500);
+      if (this.text === room2choice4.find('a')[0].text) {
+        if ($(this).attr('data-played') === undefined) {
+          bell1.play();
+          $(this).attr('data-played', true);
+          bellAttempt = bellAttempt + $(this).attr('data-pos');
+          bellAttempt = bellAttempt.replace('0','');
+        }
+      }
+      // 2
+      if (this.text === room2choice4.find('a')[1].text) {
+        if ($(this).attr('data-played') === undefined) {
+          bell2.play();
+          $(this).attr('data-played', true);
+          bellAttempt = bellAttempt + $(this).attr('data-pos');
+          bellAttempt = bellAttempt.replace('0','');
+        }
+      }
+      // 3
+      if (this.text === room2choice4.find('a')[2].text) {
+        if ($(this).attr('data-played') === undefined) {
+          bell3.play();
+          $(this).attr('data-played', true);
+          bellAttempt = bellAttempt + $(this).attr('data-pos');
+          bellAttempt = bellAttempt.replace('0','');
+        }
+      }
+      if (bellAttempt.length === undefined) {
+        console.log(0);
+      } else {
+        console.log(bellAttempt.length);
+      }
     }
     return false;
   });
 
   // room 3
-  room3choice1.find('a').each(function(){
-    console.log(this.text);
-  });
-  room3choice1.find('a').bind('click', function(){
-    return false;
-  });
+  // room3choice1.find('a').each(function(){
+  //   console.log(this.text);
+  // });
+  // room3choice1.find('a').bind('click', function(){
+  //   return false;
+  // });
 
   gameOver.css('line-height', $(window).height() + 'px').height($(window).height() + 'px');
 
