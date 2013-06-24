@@ -18,6 +18,20 @@ window.onload = function(){
     gameStage.append('<p>You won\'t be able to play this audio game without upgrading to IE9 or above or a more modern browser.</p>');
   }
 
+  // get outbound links
+  $('#about').find('a').each(function(){
+    $(this).bind('click', function(){
+      window.open($(this).attr('href'));
+      return false;
+    });
+  });
+  $('.open').bind('click', function(){
+    $('#about').fadeIn(1000);
+  });
+  $('.close').bind('click', function(){
+    $('#about').fadeOut(1000);
+  });
+
   // set vars
   var sit = false;
   var sleep = false;
