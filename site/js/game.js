@@ -1,5 +1,7 @@
 window.onload = function(){
 
+  // check formats
+
   // objects
   var gameStage = $('section > div');
   var intro     = $('#intro');
@@ -22,29 +24,30 @@ window.onload = function(){
   var puzzTry = null;
 
   // audio gubbins
+  buzz.defaults.formats = ['ogg', 'mp3', 'wav'];
   // let's try the audio in arrays
   var arrAudio = {
-    drone      : ["audio/under_drone.mp3"],
-    lose       : ["audio/lose.mp3"],
-    ambience   : ["audio/room1_ambience.mp3",
-                  "audio/room2_rain_loop.mp3",
-                  "audio/room2_rats.mp3",
-                  "audio/room2_wind.mp3",
-                  "audio/room3_flies_loop.mp3"],
-    puzzle     : ["audio/room2_bell1.mp3",
-                  "audio/room2_bell2.mp3",
-                  "audio/room2_bell3.mp3",
-                  "audio/room2_bellfail.mp3"],
-    room1      : ["audio/room1_1.mp3",
-                  "audio/room1_2.mp3",
-                  "audio/room1_3.mp3",
-                  "audio/room1_4.mp3"],
-    room2      : ["audio/room2_1.mp3",
-                  "audio/room2_2.mp3",
-                  "audio/room2_3.mp3",
-                  "audio/room2_4.mp3",
-                  "audio/room2_5.mp3"],
-    room3      : ["audio/room3_1.mp3"]
+    drone      : ["audio/under_drone"],
+    lose       : ["audio/lose"],
+    ambience   : ["audio/room1_ambience",
+                  "audio/room2_rain_loop",
+                  "audio/room2_rats",
+                  "audio/room2_wind",
+                  "audio/room3_flies_loop"],
+    puzzle     : ["audio/room2_bell1",
+                  "audio/room2_bell2",
+                  "audio/room2_bell3",
+                  "audio/room2_bellfail"],
+    room1      : ["audio/room1_1",
+                  "audio/room1_2",
+                  "audio/room1_3",
+                  "audio/room1_4"],
+    room2      : ["audio/room2_1",
+                  "audio/room2_2",
+                  "audio/room2_3",
+                  "audio/room2_4",
+                  "audio/room2_5"],
+    room3      : ["audio/room3_1"]
   };
   // tower drone
   var drone           = new buzz.sound(arrAudio.drone[0] ,{
@@ -259,11 +262,14 @@ window.onload = function(){
         room2choice3.fadeIn(1000);
       }, 51000);
     }
+    return false;
   });
 
   // search fireplace (and die) or leave well alone
   room2choice2.find('a').bind('click', function(){
-    room2choice2.find('ul').fadeOut(1000);
+    $(this).parent().siblings().animate({'opacity': '0'}, 1000, function(){
+      room2choice2.find('ul').fadeOut(1000);
+    });
     if (this.text === room2choice2.find('a')[0].text){
       endGame();
     } else {
@@ -279,6 +285,7 @@ window.onload = function(){
         room2choice3.fadeIn(1000);
       }, 51000);
     }
+    return false;
   });
 
   // continue along the wall or feel around the door again
@@ -306,6 +313,7 @@ window.onload = function(){
         room2choice4.fadeIn(1000);
       }, 21000);
     }
+    return false;
   });
 
   // console.log(room2choice4.find('a')[diceOfDeath].text);
@@ -418,7 +426,8 @@ window.onload = function(){
                 room3story1.play();
                 setTimeout(function(){
                   room3ambient.load();
-                  room3ambient.play();
+                  room3ambient.setVolume(0);
+                  room3ambient.fadeIn(1000);
                 }, 17000);
               }, 1500);
               setTimeout(function(){
