@@ -1,12 +1,22 @@
 window.onload = function(){
 
-  // check formats
-
   // objects
-  var gameStage = $('section > div');
+  var gameStage = $('#game');
   var intro     = $('#intro');
   var start     = $('#start');
   var gameOver  = $('#gameOver');
+
+  // check browser
+  var oldIE;
+  if ($('html').is('.ie6, .ie7, .ie8')) {
+      oldIE = true;
+  }
+
+  if (oldIE) {
+    // if you need to do something for old ie
+    gameStage.children().remove();
+    gameStage.append('<p>You won\'t be able to play this audio game without upgrading to IE9 or above or a more modern browser.</p>');
+  }
 
   // set vars
   var sit = false;
@@ -328,8 +338,12 @@ window.onload = function(){
       setTimeout(function(){
         room3story1.load();
         room3story1.play();
-        room2ambient.fadeOut(1000);
-        room2rats.fadeOut(1000);
+        room2ambient.fadeTo(0, 1000, function(){
+          room2ambient.stop();
+        });
+        room2rats.fadeTo(0, 1000, function(){
+          room2rats.stop();
+        });
         room3ambient.load();
         setTimeout(function(){
           room3ambient.setVolume(0);
