@@ -103,20 +103,12 @@ window.onload = function(){
 
   intro.show();
 
-  // $('h1').bind('click', function(){
-  //   room2wind.play();
-  // });
-
   // helper functions
   function randomizr(limit){
     var randNum = 0;
     randNum = Math.floor(Math.random(1) * limit);
     return randNum;
   }
-
-  // set text nodes
-  // set the story tree
-  // var storyTree = [];
 
   // puzzles
   // room 1
@@ -133,8 +125,6 @@ window.onload = function(){
   var room3choice3 = $('#room3choice3');
   // room 4
   var room4choice1 = $('#room4choice1');
-
-  // clickables
 
   // gameOver scenario
   function endGame(){
@@ -156,6 +146,8 @@ window.onload = function(){
     lose.load();
     lose.play();
   }
+
+  // clickables
 
   // start
   start.bind('click', function(){
@@ -201,7 +193,6 @@ window.onload = function(){
 
   // first actual choice
   // stand up (then get on floor) or get on floor
-  console.log();
   room1choice2.find('a').bind('click', function(){
     $(this).parent().siblings().animate({'opacity': '0'}, 1000, function(){
       room1choice2.find('ul').fadeOut(1000);
