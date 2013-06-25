@@ -60,6 +60,22 @@ h1 {
 .hidden {
   display: none;
   }
+.open,
+.close {
+  background: url(../images/icons.png);
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  width: 20px;
+  height: 20px;
+  text-indent: -10000em;
+  overflow: hidden;
+  margin: 0;
+  cursor: pointer;
+  }
+.close {
+  background-position: -20px 0;
+  }
 a {
   display: block;
   min-width: 150px;
@@ -112,8 +128,8 @@ a {
           margin: 0;
           }
 
-  section > div > div,
-  section > div > p {
+  #game > div > div,
+  #game > div > p {
     display: none;
     }
 
@@ -129,6 +145,20 @@ a {
     z-index: 1000;
     text-align: center;
     }
+  #about {
+    display: none;
+    background: rgba(0, 0, 0, .75);
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 1000;
+    padding: 110px 0 0;
+    }
+    #about a {
+      display: inline-block;
+      }
 /* misc */
 /*.ie6 #game,
 .ie7 #game,
