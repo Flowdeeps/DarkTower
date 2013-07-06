@@ -48,6 +48,7 @@ window.onload = function(){
   var puzzTry = null;
 
   // audio gubbins
+  buzz.defaults.preload = 'metadata';
   buzz.defaults.formats = ['ogg', 'mp3', 'wav'];
   // let's try the audio in arrays
   var arrAudio = {
@@ -178,17 +179,19 @@ window.onload = function(){
     // load bits
     drone.load();
     room1story1.load();
-    // fade in and out
-    drone.setVolume(0);
-    drone.fadeTo(75, 4000, function(){
-      room1story1.play();
-    });
-    room1ambient.fadeIn(4000);
-    // do the animation
-    intro.fadeOut(2000, function(){
-      setTimeout(function(){
-        room1choice1.fadeIn(2000);
-      }, 87500);
+    room1story1.bind('canplaythrough', function(){
+      // fade in and out
+      drone.setVolume(0);
+      drone.fadeTo(75, 4000, function(){
+        room1story1.play();
+      });
+      room1ambient.fadeIn(4000);
+      // do the animation
+      intro.fadeOut(2000, function(){
+        setTimeout(function(){
+          room1choice1.fadeIn(2000);
+        }, 87500);
+      });
     });
     return false;
   });
@@ -201,13 +204,15 @@ window.onload = function(){
     });
     setTimeout(function(){
       room1choice1.find('.hidden').fadeIn(1000);
-      setTimeout(function(){
-        room1choice1.find('.hidden').fadeOut(1000);
+      room1story2.load();
+      room1story2.bind('canplaythrough', function(){
         setTimeout(function(){
-          room1story2.load();
-          room1story2.play();
-        }, 1000);
-      }, 3000);
+          room1choice1.find('p').fadeOut(1000);
+          setTimeout(function(){
+            room1story2.play();
+          }, 1000);
+        }, 3000);
+      });
       setTimeout(function(){
         room1choice2.fadeIn(1000);
       }, 14000);
@@ -223,32 +228,38 @@ window.onload = function(){
     });
     if (this.innerHTML === room1choice2.find('a')[0].innerHTML) {
       room1story3.load();
-      room1story3.play();
-      setTimeout(function(){
-        room1story4.load();
+      room1story3.bind('canplaythrough', function(){
+        room1story3.play();
+        setTimeout(function(){
+          room1story4.load();
+          room1story4.play();
+          setTimeout(function(){
+            // move to room 2
+            room1 = false;
+            room2 = false;
+            room1ambient.fadeOut(4000);
+            room2ambient.load();
+            room2ambient.fadeIn(4000);
+            room2choice1.fadeIn(1000);
+          }, 33000);
+        }, 34500);
+      });
+    } else {
+      room1story4.load();
+      room1story4.bind('canplaythrough', function(){
         room1story4.play();
         setTimeout(function(){
           // move to room 2
-          room1 = false;
-          room2 = false;
           room1ambient.fadeOut(4000);
           room2ambient.load();
           room2ambient.fadeIn(4000);
           room2choice1.fadeIn(1000);
+          room2story1.load();
+          room2story1.bind('canplaythrough', function(){
+            room2story1.play();
+          });
         }, 33000);
-      }, 34500);
-    } else {
-      room1story4.load();
-      room1story4.play();
-      setTimeout(function(){
-        // move to room 2
-        room1ambient.fadeOut(4000);
-        room2ambient.load();
-        room2ambient.fadeIn(4000);
-        room2choice1.fadeIn(1000);
-        room2story1.load();
-        room2story1.play();
-      }, 33000);
+      });
     }
     return false;
   });
@@ -260,22 +271,26 @@ window.onload = function(){
     });
     if (this.innerHTML === room2choice1.find('a')[0].innerHTML){
       room2story2.load();
-      room2story2.play();
-      setTimeout(function(){
-        room2choice2.fadeIn(1000);
-      }, 37000);
+      room2story2.bind('canplaythrough', function(){
+        room2story2.play();
+        setTimeout(function(){
+          room2choice2.fadeIn(1000);
+        }, 37000);
+      });
     } else {
       // find door and rats
       room2story3.load();
-      room2story3.play();
-      setTimeout(function(){
-        room2rats.load();
-        room2rats.setVolume(0);
-        room2rats.fadeTo(10, 1000);
-      }, 27000);
-      setTimeout(function(){
-        room2choice3.fadeIn(1000);
-      }, 51000);
+      room2story3.bind('canplaythrough', function(){
+        room2story3.play();
+        setTimeout(function(){
+          room2rats.load();
+          room2rats.setVolume(0);
+          room2rats.fadeTo(10, 1000);
+        }, 27000);
+        setTimeout(function(){
+          room2choice3.fadeIn(1000);
+        }, 51000);
+      });
     }
     return false;
   });
@@ -290,15 +305,17 @@ window.onload = function(){
     } else {
       // find door and rats
       room2story3.load();
-      room2story3.play();
-      setTimeout(function(){
-        room2rats.load();
-        room2rats.setVolume(0);
-        room2rats.fadeTo(10, 1000);
-      }, 27000);
-      setTimeout(function(){
-        room2choice3.fadeIn(1000);
-      }, 51000);
+      room2story3.bind('canplaythrough', function(){
+        room2story3.play();
+        setTimeout(function(){
+          room2rats.load();
+          room2rats.setVolume(0);
+          room2rats.fadeTo(10, 1000);
+        }, 27000);
+        setTimeout(function(){
+          room2choice3.fadeIn(1000);
+        }, 51000);
+      });
     }
     return false;
   });
@@ -311,22 +328,28 @@ window.onload = function(){
     if (this.innerHTML === room2choice3.find('a')[0].innerHTML){
       // discover living room
       room2story4.load();
-      room2story4.play();
-      setTimeout(function(){
-        // go back to the door
-        room2story5.load();
+      room2story4.bind('canplaythrough', function(){
+        room2story4.play();
+        setTimeout(function(){
+          // go back to the door
+          room2story5.load();
+          room2story5.bind('canplaythrough', function(){
+            room2story5.play();
+            setTimeout(function(){
+              room2choice4.fadeIn(1000);
+            }, 21000);
+          });
+        }, 30000);
+      });
+    } else {
+      // go back to the door
+      room2story5.load();
+      room2story5.bind('canplaythrough', function(){
         room2story5.play();
         setTimeout(function(){
           room2choice4.fadeIn(1000);
         }, 21000);
-      }, 30000);
-    } else {
-      // go back to the door
-      room2story5.load();
-      room2story5.play();
-      setTimeout(function(){
-        room2choice4.fadeIn(1000);
-      }, 21000);
+      });
     }
     return false;
   });
@@ -351,20 +374,22 @@ window.onload = function(){
       room3 = true;
       setTimeout(function(){
         room3story1.load();
-        room3story1.play();
-        room2ambient.fadeTo(0, 1000, function(){
-          room2ambient.stop();
-        });
-        room2rats.fadeTo(0, 1000, function(){
-          room2rats.stop();
-        });
-        room3ambient.load();
-        setTimeout(function(){
-          room3ambient.setVolume(0);
-          room3ambient.fadeIn(1000);
-        }, 17000);
-        setTimeout(function(){
-          room3choice1.fadeIn(47000);
+        room3story1.bind('canplaythrough', function(){
+          room3story1.play();
+          room2ambient.fadeTo(0, 1000, function(){
+            room2ambient.stop();
+          });
+          room2rats.fadeTo(0, 1000, function(){
+            room2rats.stop();
+          });
+          room3ambient.load();
+          setTimeout(function(){
+            room3ambient.setVolume(0);
+            room3ambient.fadeIn(1000);
+          }, 17000);
+          setTimeout(function(){
+            room3choice1.fadeIn(47000);
+          });
         });
       }, 5000);
     } else {
@@ -442,12 +467,14 @@ window.onload = function(){
             room2choice4.fadeOut(1000, function(){
               setTimeout(function(){
                 room3story1.load();
-                room3story1.play();
-                setTimeout(function(){
-                  room3ambient.load();
-                  room3ambient.setVolume(0);
-                  room3ambient.fadeIn(1000);
-                }, 17000);
+                room3story1.bind('canplaythrough', function(){
+                  room3story1.play();
+                  setTimeout(function(){
+                    room3ambient.load();
+                    room3ambient.setVolume(0);
+                    room3ambient.fadeIn(1000);
+                  }, 17000);
+                });
               }, 1500);
               setTimeout(function(){
                 room3choice1.fadeIn(1000);
@@ -498,12 +525,52 @@ window.onload = function(){
   });
 
   // room 3
-  // room3choice1.find('a').each(function(){
-  //   console.log(this.text);
-  // });
-  // room3choice1.find('a').bind('click', function(){
-  //   return false;
-  // });
+  // the table
+  room3choice1.find('a').bind('click', function(){
+    $(this).parent().siblings().animate({'opacity': '0'}, 1000, function(){
+      room3choice1.find('ul').fadeOut(1000);
+    });
+    if (this.innerHTML === room3choice1.find('a')[0].innerHTML){
+      setTimeout(function(){
+        room3choice2.fadeIn(1000);
+      }, 1000);
+    } else {
+      setTimeout(function(){
+        room3choice3.fadeIn(1000);
+      }, 1000);
+    }
+    room3choice1.fadeOut(1000);
+    return false;
+  });
+
+  // take a nap?
+  room3choice2.find('a').bind('click', function(){
+    $(this).parent().siblings().animate({'opacity': '0'}, 1000, function(){
+      room3choice2.find('ul').fadeOut(1000);
+    });
+    if (this.innerHTML === room3choice1.find('a')[0].innerHTML){
+      console.log('dead');
+    } else {
+      setTimeout(function(){
+        room3choice3.fadeIn(1000);
+      }, 1000);
+    }
+    room3choice2.fadeOut(1000);
+    return false;
+  });
+
+  // take a sword
+  room3choice3.find('a').bind('click', function(){
+    $(this).parent().siblings().animate({'opacity': '0'}, 1000, function(){
+      room3choice3.find('ul').fadeOut(1000);
+    });
+    if (this.innerHTML === room3choice3.find('a')[0].innerHTML){
+      console.log('sword taken');
+      sword = true;
+    }
+    room3choice3.fadeOut(1000);
+    return false;
+  });
 
   gameOver.css('line-height', $(window).height() + 'px').height($(window).height() + 'px');
 
