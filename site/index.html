@@ -10,13 +10,27 @@
   <title>Dark Tower</title>
   <link rel="stylesheet" type="text/css" href="css/normalize.css" />
   <link rel="stylesheet" type="text/css" href="css/styles.css" />
-  <script src="js/jquery.1.10.0.js"></script>
+  <link rel="shortcut icon" href="./favicon.ico" type="image/vnd.microsoft.icon" /> 
+  <link rel="icon" href="./favicon.ico" type="image/vnd.microsoft.icon" />
+  <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
   <script src="js/buzz.js"></script>
   <script src="js/game.js"></script>
 </head>
 <body>
   <h1>Dark Tower</h1>
   <p class="open">About</p>
+  <div id="about">
+    <h2>About Dark Tower</h2>
+    <p>Dark Tower is best experienced using headphones.</p>
+
+    <p>Programming and implementation: <a href="http://www.petehaughie.com/" rel="external">Pete Haughie</a></p>
+    <p>Writing, audio and interface: <a href="http://www.disastrid.net/" rel="external">Astrid Bin</a></p>
+    <p>Concept by both.</p>
+    <p>The technology used was the JavaScript <a href="http://buzz.jaysalvat.com" rel="external">BUZZ library</a> by Jay Salvat to
+    handle audio, <a href="http://www.jquery.com/" rel="external">jQuery</a> for ease of deployment, <a href="http://audacity.sourceforge.net/" rel="external">AUDACITY</a> for audio production
+    and <a href="https://github.com/search?q=twine">TWINE</a> for structuring the text.</p>
+    <p class="close">Ok, take me back to the game…</p>
+  </div>
   <div id="game">
     <!-- intro -->
     <div id="intro">
@@ -25,7 +39,7 @@
     <!-- room 1 -->
     <!-- choice 1 -->
     <div id="room1choice1">
-      <p>What do you want to shout?</p>
+      <p class="question">What do you want to shout?</p>
       <ul>
         <li><a href="#" class="opt1">HELP!</a></li>
         <li><a href="#" class="opt2">HELLO!</a></li>
@@ -45,7 +59,7 @@
     <!-- choice 1 -->
     <div id="room2choice1">
 
-      <p class="question">You need to search this room. Do you follow the wall to the left or the right?</p>
+      <p>You need to search this room. Do you follow the wall to the left or the right?</p>
 
       <ul>
         <li><a href="#" class="mantle">Search to the left</a></li>
@@ -65,7 +79,7 @@
     <!-- choice 3 -->
     <div id="room2choice3">
 
-      <p class="question">Do you continue feeling along the wall, or do you feel around the door again?</p>
+      <p>Do you continue feeling along the wall, or do you feel around the door again?</p>
 
       <ul>
         <li><a href="#">Continue feeling along the wall</a></li>
@@ -90,7 +104,7 @@
 
       <ul>
         <li><a href="#">Find a chair</a></li>
-        <li><a href="#">No thanks, I'll stand</a></li>
+        <li><a href="#">No thanks, I'll stand…</a></li>
       </ul>
 
     </div>
@@ -106,7 +120,7 @@
 
       <ul>
         <li><a href="#">Take a sword</a></li>
-        <li><a href="#">I can't be trusted with sharp things</a></li>
+        <li><a href="#">What use have I got for a sword in this darkness?</a></li>
       </ul>
 
     </div>
@@ -116,8 +130,8 @@
     <div id="room4choice1">
 
       <ul>
-        <li><a href="#">Sneak out</a></li>
-        <li><a href="#">Leg it</a></li>
+        <li><a href="#">Sneak out quietly</a></li>
+        <li><a href="#">Run away!</a></li>
       </ul>
 
     </div>
@@ -126,13 +140,9 @@
   <div id="gameOver">
     Game over
   </div>
-  <div id="about">
-    <h2>About Dark Tower</h2>
-    <p>Dark Tower was concieved, written, recorded in one weekend and eventually went on to win the Berlin Mini Games Jam event at Game Academy in June 2013.</p>
-    <p>The force behind it are husband and wife creative team <a href="http://www.petehaughie.com/" rel="external">Pete Haughie</a> and <a href="http://www.disastrid.net/" rela="external">Astrid Bin</a>.</p>
-    <p>The technology used was the fantastic js library <a href="http://buzz.jaysalvat.com">Buzz</a> by Jay Salvat, the ubiquitous jQuery for ease of deployment and speed of development, <a href="http://audacity.sourceforge.net/">Audacity</a> for recording and <a href="https://github.com/search?q=twine">Twine</a> for writing and checking that the story all fitted together properly.</p>
-    <p>Notes: Due to the intensive audio usage it might not work too well on mobile devices and tablets.</p>
-    <p class="close">Ok, take me back to the game…</p>
+
+  <div id="win">
+    You have escaped…
   </div>
 </body>  
 </html>
