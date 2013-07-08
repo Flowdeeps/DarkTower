@@ -657,6 +657,8 @@ window.onload = function(){
       room3sword.play();
     }
     room3choice3.fadeOut(1000);
+    room3 = false;
+    room4 = true;
     room4story1.load();
     room4story1.bind('canplaythrough', function(){
       room4story1.play();
