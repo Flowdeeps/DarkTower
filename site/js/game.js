@@ -218,10 +218,10 @@ window.onload = function(){
   // clickables
 
   // start
+  drone.load();
+  room1story1.load();
   start.bind('click', function(){
     // load bits
-    drone.load();
-    room1story1.load();
     room1story1.bind('canplaythrough', function(){
       // fade in and out
       drone.setVolume(0);
