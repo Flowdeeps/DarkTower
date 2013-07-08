@@ -194,27 +194,25 @@ window.onload = function(){
   function endGame(){
     gameStage.fadeOut(1000);
     gameOver.fadeIn(1000);
-    // can't die in room 1
-    if (room2 === true) {
-      console.log('is room 2');
-      room2ambient.fadeOut(1000);
-    }
-    if (room3 === true ) {
-      console.log('is room 3');
-      room3flies.fadeOut(1000);
-      room3tableFlies.fadeOut(1000);
-    }
-    if (room4 === true) {
-      console.log('is room 4');
-      room4ambient.fadeOut(1000);
-    }
     lose.load();
     lose.play();
+    // can't die in room 1
+    if (room2 === true) {
+      room2rain.fadeTo(0, 1000);
+    }
+    if (room3 === true ) {
+      room3flies.fadeTo(0, 1000);
+      room3tableFlies.fadeTo(0, 1000);
+    }
+    if (room4 === true) {
+      room4rain.fadeOut(1000);
+    }
   }
 
   function win(){
     gameStage.fadeOut(1000);
     winnar.fadeIn(1000);
+    room4rain.fadeTo(0, 1000);
   }
 
   // clickables
@@ -517,11 +515,26 @@ window.onload = function(){
                     room3flies.setVolume(0);
                     room3flies.fadeTo(50, 1000);
                   }, 16500);
+                  // find a chair
+                  room3story2.load();
+                  room3story2.bind('canplaythrough', function(){
+                    setTimeout(function(){
+                      room3story2.play();
+                      room3tableFlies.load();
+                      setTimeout(function(){
+                        room3tableFlies.setVolume(0);
+                        room3tableFlies.fadeTo(50, 1000);
+                      }, 34000);
+                      setTimeout(function(){
+                        room3choice2.fadeIn(1000);
+                      }, 47500);
+                    }, 47500);
+                  });
                 });
               }, 1500);
-              setTimeout(function(){
-                room3choice1.fadeIn(1000);
-              }, 47000);
+              // setTimeout(function(){
+              //   room3choice1.fadeIn(1000);
+              // }, 47000);
             });
             }, 1000);
           } else {
@@ -559,9 +572,6 @@ window.onload = function(){
           bellAttempt = bellAttempt + $(this).attr('data-pos');
           bellAttempt = bellAttempt.replace('0','');
         }
-      }
-      if (bellAttempt.length === undefined) {
-        console.log(0);
       }
     }
     return false;
@@ -607,7 +617,6 @@ window.onload = function(){
     });
     // sleep eternally!
     if (this.innerHTML === room3choice2.find('a')[0].innerHTML){
-      console.log(this.innerHTML);
       room3story4.load();
       room3story4.bind('canplaythrough', function(){
         room3story4.play();
@@ -674,10 +683,10 @@ window.onload = function(){
               room4choice1.fadeIn(1000);
             }, 64000);
           });
+          setTimeout(function(){
+            room3flies.fadeTo(0, 1000);
+          }, 17000);
         }
-        setTimeout(function(){
-          room3flies.fadeTo(0, 1000);
-        }, 17000);
         room4rain.setVolume(0);
         room4rain.fadeTo(50, 4000);
       }, 22500);
@@ -726,5 +735,6 @@ window.onload = function(){
   });
 
   gameOver.css('line-height', $(window).height() + 'px').height($(window).height() + 'px');
+  winnar.css('line-height', $(window).height() + 'px').height($(window).height() + 'px');
 
 };
