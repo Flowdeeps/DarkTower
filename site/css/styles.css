@@ -85,9 +85,9 @@ a {
   padding: 10px;
   border-radius: 5px;
   background: #333;
-  text-shadow: -1px -1px 0 #000, 1px 1px 0 #333;
-  letter-spacing: .15em;
-  color: #666;
+  /*text-shadow: -1px -1px 0 #000, 1px 1px 0 #333;*/
+  letter-spacing: .1em;
+  color: #999;
   text-decoration: none;
   text-transform: uppercase;
   }
