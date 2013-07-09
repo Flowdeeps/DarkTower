@@ -50,7 +50,7 @@ window.onload = function(){
 
   // audio gubbins
   buzz.defaults.preload = 'metadata';
-  buzz.defaults.formats = ['ogg', 'mp3', 'wav'];
+  buzz.defaults.formats = ['mp3', 'ogg', 'wav'];
   // let's try the audio in arrays
   var arrAudio = {
     drone      : ["audio/under_drone"],
@@ -218,11 +218,11 @@ window.onload = function(){
   // clickables
 
   // start
-  drone.load();
-  room1story1.load();
   start.bind('click', function(){
+    drone.load();
+    room1story1.load();
     // load bits
-    room1story1.bind('canplaythrough', function(){
+    room1story1.bind('canplay', function(){
       // fade in and out
       drone.setVolume(0);
       drone.fadeTo(50, 4000, function(){
@@ -249,7 +249,7 @@ window.onload = function(){
     setTimeout(function(){
       room1choice1.find('.hidden').fadeIn(1000);
       room1story2.load();
-      room1story2.bind('canplaythrough', function(){
+      room1story2.bind('canplay', function(){
         setTimeout(function(){
           room1choice1.find('.hidden').fadeOut(1000);
           setTimeout(function(){
@@ -272,11 +272,11 @@ window.onload = function(){
     });
     if (this.innerHTML === room1choice2.find('a')[0].innerHTML) {
       room1story3.load();
-      room1story3.bind('canplaythrough', function(){
+      room1story3.bind('canplay', function(){
         room1story3.play();
         setTimeout(function(){
           room1story4.load();
-          room1story4.bind('canplaythrough', function(){
+          room1story4.bind('canplay', function(){
             room1story4.play();
             setTimeout(function(){
               // move to room 2
@@ -287,7 +287,7 @@ window.onload = function(){
                 room2choice1.fadeIn(1000);
               }, 39000);
               room2story1.load();
-              room2story1.bind('canplaythrough', function(){
+              room2story1.bind('canplay', function(){
                 room2story1.play();
               });
             }, 33000);
@@ -296,7 +296,7 @@ window.onload = function(){
       });
     } else {
       room1story4.load();
-      room1story4.bind('canplaythrough', function(){
+      room1story4.bind('canplay', function(){
         room1story4.play();
         setTimeout(function(){
           // move to room 2
@@ -307,7 +307,7 @@ window.onload = function(){
             room2choice1.fadeIn(1000);
           }, 39000);
           room2story1.load();
-          room2story1.bind('canplaythrough', function(){
+          room2story1.bind('canplay', function(){
             room2story1.play();
           });
         }, 33000);
@@ -326,7 +326,7 @@ window.onload = function(){
     });
     if (this.innerHTML === room2choice1.find('a')[0].innerHTML){
       room2story2.load();
-      room2story2.bind('canplaythrough', function(){
+      room2story2.bind('canplay', function(){
         room2story2.play();
         setTimeout(function(){
           room2choice2.fadeIn(1000);
@@ -335,7 +335,7 @@ window.onload = function(){
     } else {
       // find door and rats
       room2story3.load();
-      room2story3.bind('canplaythrough', function(){
+      room2story3.bind('canplay', function(){
         room2story3.play();
         room2rats.load();
         setTimeout(function(){
@@ -362,7 +362,7 @@ window.onload = function(){
       // find door and rats
       room2rats.load();
       room2story3.load();
-      room2story3.bind('canplaythrough', function(){
+      room2story3.bind('canplay', function(){
         room2story3.play();
         setTimeout(function(){
           room2rats.setVolume(0);
@@ -386,12 +386,12 @@ window.onload = function(){
     if (this.innerHTML === room2choice3.find('a')[0].innerHTML){
       // discover living room
       room2story4.load();
-      room2story4.bind('canplaythrough', function(){
+      room2story4.bind('canplay', function(){
         room2story4.play();
         setTimeout(function(){
           // go back to the door
           room2story5.load();
-          room2story5.bind('canplaythrough', function(){
+          room2story5.bind('canplay', function(){
             room2story5.play();
             setTimeout(function(){
               room2choice4.fadeIn(1000);
@@ -402,7 +402,7 @@ window.onload = function(){
     } else {
       // go back to the door
       room2story5.load();
-      room2story5.bind('canplaythrough', function(){
+      room2story5.bind('canplay', function(){
         room2story5.play();
         setTimeout(function(){
           room2choice4.fadeIn(1000);
@@ -508,7 +508,7 @@ window.onload = function(){
                 room2rats.fadeTo(0, 1000, function(){
                   room2rats.stop();
                 });
-                room3story1.bind('canplaythrough', function(){
+                room3story1.bind('canplay', function(){
                   room3story1.play();
                   room3flies.load();
                   setTimeout(function(){
@@ -517,7 +517,7 @@ window.onload = function(){
                   }, 16500);
                   // find a chair
                   room3story2.load();
-                  room3story2.bind('canplaythrough', function(){
+                  room3story2.bind('canplay', function(){
                     setTimeout(function(){
                       room3story2.play();
                       room3tableFlies.load();
@@ -586,7 +586,7 @@ window.onload = function(){
     });
     if (this.innerHTML === room3choice1.find('a')[0].innerHTML){
       room3story2.load();
-      room3story2.bind('canplaythrough', function(){
+      room3story2.bind('canplay', function(){
         room3story2.play();
         room3tableFlies.load();
         setTimeout(function(){
@@ -599,7 +599,7 @@ window.onload = function(){
       });
     } else {
       room3story3.load();
-      room3story3.bind('canplaythrough', function(){
+      room3story3.bind('canplay', function(){
         room3story3.play();
         setTimeout(function(){
           room3choice3.fadeIn(1000);
@@ -618,7 +618,7 @@ window.onload = function(){
     // sleep eternally!
     if (this.innerHTML === room3choice2.find('a')[0].innerHTML){
       room3story4.load();
-      room3story4.bind('canplaythrough', function(){
+      room3story4.bind('canplay', function(){
         room3story4.play();
         setTimeout(function(){
           room3tableFlies.fadeTo(0, 1000, function(){
@@ -635,7 +635,7 @@ window.onload = function(){
         });
       }, 5000);
       room3story3.load();
-      room3story3.bind('canplaythrough', function(){
+      room3story3.bind('canplay', function(){
         room3story3.play();
         setTimeout(function(){
           room3choice3.fadeIn(1000);
@@ -660,13 +660,13 @@ window.onload = function(){
     room3 = false;
     room4 = true;
     room4story1.load();
-    room4story1.bind('canplaythrough', function(){
+    room4story1.bind('canplay', function(){
       room4story1.play();
       room4story2.load();
       setTimeout(function(){
         if (sword === true){
           room4story2.load();
-          room4story2.bind('canplaythrough', function(){
+          room4story2.bind('canplay', function(){
             room4rain.fadeTo(100, 1000);
             room4story2.play();
             setTimeout(function(){
@@ -675,7 +675,7 @@ window.onload = function(){
           });
         } else {
           room4story3.load();
-          room4story3.bind('canplaythrough', function(){
+          room4story3.bind('canplay', function(){
             room4story3.play();
             setTimeout(function(){
               room4beast.setVolume(0);
@@ -704,7 +704,7 @@ window.onload = function(){
     // you am dead
     if (this.innerHTML === room4choice1.find('a')[0].innerHTML){
       room4story4.load();
-      room4story4.bind('canplaythrough', function(){
+      room4story4.bind('canplay', function(){
         room4story4.play();
         setTimeout(function(){
           room4beast.fadeTo(0, 1000);
@@ -716,7 +716,7 @@ window.onload = function(){
     // you amn't dead
     } else {
       room4story5.load();
-      room4story5.bind('canplaythrough', function(){
+      room4story5.bind('canplay', function(){
         room4story5.play();
         setTimeout(function(){
           room4beast.fadeTo(0, 2000, function(){
